@@ -1,6 +1,5 @@
 import { createContext, useMemo, useState } from 'react';
 
-// eslint-disable-next-line react-refresh/only-export-components
 export const AuthContext = createContext(null);
 
 export function AuthProvider({ children }) {
@@ -10,14 +9,14 @@ export function AuthProvider({ children }) {
     return raw ? JSON.parse(raw) : null;
   });
 
-  const login = async ({ username }) => {
+  const login = async ({ email,password}) => {
     // Replace with real API call:
-    // const { data } = await api.post('/auth/login', { username, password });
-    // setToken(data.accessToken); setUser(data.user);
+    const { data } = await api.post('/auth/login', { email,password });
+     setToken(data.accessToken); setUser(data.user);
 
     // Temporary mock:
-    const mock = { accessToken: 'demo-token', user: { id: 'u1', username, role: 'UNDERWRITER' } };
-    setToken(mock.accessToken); setUser(mock.user);
+    // const mock = { accessToken: 'demo-token', user: { id: 'u1', email, role: 'UNDERWRITER' } };
+    // setToken(mock.accessToken); setUser(mock.user);
     localStorage.setItem('token', mock.accessToken);
     localStorage.setItem('user', JSON.stringify(mock.user));
     return true;
@@ -25,7 +24,7 @@ export function AuthProvider({ children }) {
 
   const logout = () => {
     setToken(null); setUser(null);
-    localStorage.removeItem('token'); localStorage.removeItem('user');
+    localStorage.clear()
   };
 
   const value = useMemo(() => ({ token, user, login, logout }), [token, user]);
