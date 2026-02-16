@@ -11,6 +11,7 @@ import { ROLES } from '../app/constants';
 export function AppRoutes() {
   return (
     <Routes>
+      <Route path="/" element={<LoginPage />} />
       <Route path="/login" element={<LoginPage />} />
 
       <Route element={<ProtectedRoute />}>
@@ -28,8 +29,8 @@ export function AppRoutes() {
           />
         </Route>
       </Route>
-
-      <Route path="*" element={<Navigate to="/dashboard" replace />} />
+      <Route path ="*" element={<AccessDenied/>}/>
+      {/* <Route path="*" element={<Navigate to="/dashboard" replace />} /> */}
     </Routes>
   );
 }
